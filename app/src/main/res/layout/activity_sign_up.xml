@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/screenBackground"
+    tools:context=".SignUpActivity">
+
+    <LinearLayout
+        android:id="@+id/Back_button_area_sign_up"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        style="@style/input_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/Sign_up_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_button_image_description"
+            android:src="@drawable/chevronleft"
+            style="@style/icon_tint"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/back_text"
+            android:textStyle="bold"
+            style="@style/primary_text"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/form_area"
+        android:layout_below="@+id/Back_button_area_sign_up"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/Sign_up_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:text="@string/sing_up_with_us_text"
+            style="@style/primary_text"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/sign_up_user_name"
+            android:layout_below="@+id/Sign_up_heading"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            style="@style/input_hint_and_text_and_bg"
+            android:textSize="17sp"
+            android:hint="@string/user_name_text"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:autofillHints="name" />
+
+        <EditText
+            android:id="@+id/sign_up_email"
+            android:layout_below="@+id/sign_up_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            style="@style/input_hint_and_text_and_bg"
+            android:textSize="17sp"
+            android:hint="@string/email_text"
+            android:layout_marginTop="20dp"
+            android:autofillHints="emailAddress"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/sign_up_password"
+            android:layout_below="@+id/sign_up_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            style="@style/input_hint_and_text_and_bg"
+            android:textSize="17sp"
+            android:hint="@string/password_text"
+            android:layout_marginTop="20dp"
+            android:autofillHints="password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/sign_up_Confirm_password"
+            android:layout_below="@+id/sign_up_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            style="@style/input_hint_and_text_and_bg"
+            android:textSize="17sp"
+            android:hint="@string/confirm_password_text"
+            android:layout_marginTop="20dp"
+            android:autofillHints="password"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:id="@+id/qaAndSigUpQA"
+            android:layout_below="@+id/sign_up_Confirm_password"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textQA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/primary_text"
+                android:text="@string/all_ready_have_an_account_text"
+                />
+
+            <TextView
+                android:id="@+id/textSignUp"
+                android:layout_marginStart="10dp"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in_text"
+                />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_up_button"
+            android:layout_below="@+id/qaAndSigUpQA"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_text"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="25dp"
+            android:textColor="@color/black"
+            android:background="@drawable/button_background_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

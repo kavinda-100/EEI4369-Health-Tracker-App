@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/screenBackground"
+    android:layout_marginBottom="90dp"
+    tools:context=".AddMedicationFragment">
+
+    <!--    heading area-->
+    <LinearLayout
+        android:id="@+id/add_medication_heading_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables,UselessParent">
+        <!--back icon-->
+        <ImageView
+            android:id="@+id/add_medication_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_text"
+            style="@style/icon_tint"
+            android:src="@drawable/baseline_keyboard_backspace_24"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp"
+            />
+        <!--    heading-->
+        <TextView
+            android:id="@+id/add_medication_heading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_medication_heading"
+            style="@style/primary_text"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="75dp"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_below="@+id/add_medication_heading_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp">
+
+            <!--    medication name-->
+            <EditText
+                android:id="@+id/add_medication_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                style="@style/input_hint_and_text_and_bg"
+                android:textSize="18sp"
+                android:hint="@string/medication_name_hint"
+                android:layout_marginTop="30dp"
+                android:autofillHints="emailAddress"
+                android:inputType="text" />
+
+            <!--    medication description-->
+            <EditText
+                android:id="@+id/add_medication_description"
+                android:layout_below="@+id/add_medication_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                style="@style/input_hint_and_text_and_bg"
+                android:textSize="18sp"
+                android:hint="@string/medication_description_hint"
+                android:layout_marginTop="20dp"
+                android:autofillHints="text"
+                android:inputType="text" />
+
+            <!--    medication Dosage-->
+            <EditText
+                android:id="@+id/add_medication_dosage"
+                android:layout_below="@+id/add_medication_description"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                style="@style/input_hint_and_text_and_bg"
+                android:textSize="18sp"
+                android:hint="@string/medication_dosage_hint"
+                android:layout_marginTop="20dp"
+                android:autofillHints="text"
+                android:inputType="number" />
+
+            <!--    add medication Picture-->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_medication_picture_button"
+                android:layout_below="@+id/add_medication_dosage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_picture"
+                android:textAllCaps="false"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="25dp"
+                android:layout_marginTop="20dp"
+                style="@style/add_img_btn"
+                android:drawableStart="@drawable/baseline_upload_24"
+                android:drawablePadding="5dp"/>
+
+            <TextView
+                android:id="@+id/add_medication_picture_overview"
+                android:layout_below="@+id/add_medication_picture_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image_overview"
+                android:textSize="14sp"
+                style="@style/secondary_text"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/add_medication_picture_preview"
+                android:layout_below="@+id/add_medication_picture_overview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/avatarbg"
+                android:contentDescription="@string/image"
+                android:visibility="gone"
+                />
+
+
+            <!--    add notification button-->
+            <LinearLayout
+                android:id="@+id/add_notification_area"
+                android:layout_below="@+id/add_medication_picture_preview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/add_notification_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <TextView
+                    android:id="@+id/add_notification_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_a_notification_remainder"
+                    style="@style/primary_text"
+                    android:textSize="16sp"
+                    android:layout_marginStart="20dp"
+                    />
+            </LinearLayout>
+
+            <!-- Frequency/time -->
+            <RelativeLayout
+                android:id="@+id/add_medication_frequency_area"
+                android:layout_below="@+id/add_notification_area"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!-- add frequency button-->
+                <LinearLayout
+                    android:id="@+id/add_medication_frequency_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                <TextView
+                    android:id="@+id/add_medication_frequency_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_time"
+                    style="@style/secondary_bg"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:paddingVertical="15dp"
+                    android:paddingHorizontal="15dp"
+                    />
+
+                    <ImageView
+                        android:id="@+id/add_medication_frequency_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_add_24"
+                        android:layout_marginStart="-40dp"
+                        android:layout_marginTop="15dp"
+                        android:contentDescription="@string/image" />
+
+                </LinearLayout>
+                <!--frequency-->
+                <LinearLayout
+                    android:id="@+id/add_medication_frequency_list"
+                    android:layout_below="@+id/add_medication_frequency_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/add_medication_frequency_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_12_00_a_m"
+                        android:textStyle="bold"
+                        style="@style/primary_text"
+                        android:textSize="16sp"
+                        />
+                    <ImageView
+                        android:id="@+id/delete_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_delete_24"
+                        android:layout_marginStart="40dp"
+                        android:contentDescription="@string/image"
+                        style="@style/icon_tint" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_below="@+id/add_medication_frequency_list"
+                    android:id="@+id/add_medication_frequency_repetition_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/after"
+                        android:textSize="16sp"
+                        style="@style/secondary_text"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:id="@+id/add_medication_hours"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:padding="10dp"
+                        android:layout_marginStart="10dp"
+                        style="@style/input_hint_and_text_and_bg"
+                        android:textSize="18sp"
+                        android:hint="@string/_6"
+                        android:textColorHint="@color/lite_text_color"
+                        android:autofillHints="phone"
+                        android:inputType="number" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hours"
+                        android:textSize="16sp"
+                        style="@style/secondary_text"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!--    add and cancel medication button-->
+            <LinearLayout
+                android:id="@+id/add_medication_button_area"
+                android:layout_below="@+id/add_medication_frequency_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add_medication_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add"
+                    android:textAllCaps="false"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="25dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/button_background_primary"/>
+
+                <Button
+                    android:id="@+id/add_cancel_medication_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel_text"
+                    style="@style/secondary_bg"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="25dp"
+                    android:layout_marginStart="20dp"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

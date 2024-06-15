@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+<!-- primary color-->
+    <color name="primary">#43F212</color>
+<!--    background color-->
+    <color name="background">#E6EDF5</color>
+    <color name="background_dark">#020202</color>
+<!--    primary text color-->
+    <color name="text_color">#FF000000</color>
+    <color name="text_color_dark">#EBEFF1</color>
+<!--    secondary text color-->
+    <color name="lite_text_color">#8A8585</color>
+    <color name="lite_text_color_dark">#7C7F83</color>
+<!--    card background color-->
+    <color name="card_background">#FFFFFFFF</color>
+    <color name="card_background_dark">#323030</color>
+<!--    input background-->
+    <color name="input_background">#FFFFFF</color>
+    <color name="input_background_dark">#323030</color>
+</resources>

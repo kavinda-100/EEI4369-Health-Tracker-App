@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/screenBackground"
+    android:layout_marginBottom="90dp"
+    tools:context=".AboutMedicationFragment">
+
+    <!--    heading area-->
+    <LinearLayout
+        android:id="@+id/about_medication_heading_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+        <!--back icon-->
+        <ImageView
+            android:id="@+id/about_medication_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_text"
+            android:src="@drawable/baseline_keyboard_backspace_24"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp"
+            />
+        <!--    heading-->
+        <TextView
+            android:id="@+id/about_medication_heading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_medication_heading"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="75dp"
+            />
+
+    </LinearLayout>
+
+    <!-- details area-->
+    <ScrollView
+        android:id="@+id/about_medication_scroll_view"
+        android:layout_below="@+id/about_medication_heading_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/about_medication_details_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--    medicine name-->
+            <TextView
+                android:id="@+id/about_medication_name_of_medicine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_of_medicine"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                />
+            <TextView
+                android:id="@+id/about_medication_name_of_medicine_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about_medication_name_of_medicine"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="@string/paracetamol"
+                style="@style/secondary_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!--    medicine description-->
+            <TextView
+                android:id="@+id/about_medication_description"
+                android:layout_below="@+id/about_medication_name_of_medicine_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/about_medication_description_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about_medication_description"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="@string/paracetamol_description"
+                style="@style/secondary_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!--    dosage-->
+            <TextView
+                android:id="@+id/about_medication_dosage"
+                android:layout_below="@+id/about_medication_description_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dosage"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/about_medication_dosage_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about_medication_dosage"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="@string/paracetamol_dosage"
+                style="@style/secondary_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!--    picture of the medicine-->
+            <TextView
+                android:id="@+id/about_medication_image_sub"
+                android:layout_below="@+id/about_medication_dosage_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <ImageView
+                android:id="@+id/about_medication_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@+id/about_medication_image_sub"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:src="@drawable/tablet"
+                android:contentDescription="@string/paracetamol_image"
+                />
+
+            <TextView
+                android:id="@+id/about_medication_time_of_taking"
+                android:layout_below="@+id/about_medication_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_of_taking"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/about_medication_time_of_taking_value"
+                android:layout_below="@+id/about_medication_time_of_taking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:00:a.m"
+                style="@style/secondary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/about_medication_time_of_frequency"
+                android:layout_below="@+id/about_medication_time_of_taking_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_of_frequency"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/about_medication_time_of_frequency_value"
+                android:layout_below="@+id/about_medication_time_of_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/every_6_hours"
+                style="@style/secondary_text"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <!--    edit and delete button -->
+            <LinearLayout
+                android:id="@+id/about_medication_edit_delete_button_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about_medication_time_of_frequency_value"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="20dp"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/about_medication_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="25dp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/baseline_edit_24"
+                    android:drawableTint="@color/black"
+                    android:drawablePadding="5dp"
+                    android:background="@drawable/button_background_primary"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/about_medication_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete"
+                    android:textAllCaps="false"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="25dp"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/baseline_delete_24"
+                    android:drawableTint="@color/white"
+                    android:drawablePadding="5dp"
+                    android:background="@drawable/button_background_worning"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <!--    lear more-->
+    <!--    floating button-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/go_to_adu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/add_medication"
+        app:elevation="6dp"
+        app:fabSize="auto"
+        app:srcCompat="@drawable/baseline_video_library_24"
+        app:tint="@color/primary"/>
+
+
+</RelativeLayout>

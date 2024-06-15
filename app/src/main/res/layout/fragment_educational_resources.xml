@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/screenBackground"
+    android:layout_marginBottom="90dp"
+    tools:context=".EducationalResourcesFragment">
+
+    <!--    heading-->
+    <TextView
+        android:id="@+id/edu_heading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/educational_resources_heading"
+        style="@style/primary_text"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        />
+
+<!--    content-->
+
+<!--    go to map button-->
+    <!--    floating button-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/open_map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        style="@style/floating_button_ade"
+        android:contentDescription="@string/add_medication"
+        app:srcCompat="@drawable/baseline_place_24"
+        app:tint="#FA0303"
+        app:fabSize="auto"
+        app:fabCustomSize="70dp"
+        app:elevation="6dp"/>
+</RelativeLayout>

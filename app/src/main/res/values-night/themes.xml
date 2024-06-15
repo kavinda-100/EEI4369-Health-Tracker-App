@@ -1,0 +1,62 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.HeathTrakerApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+         <item name="colorPrimary">@color/white</item>
+    </style>
+
+    <!-- dark mode-->
+    <style name="screenBackground" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:background">@color/background_dark</item>
+    </style>
+    <style name="cardBackground" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:background">@color/card_background_dark</item>
+    </style>
+    <style name="primary_text" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:textColor">@color/text_color_dark</item>
+    </style>
+    <style name="secondary_text" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:textColor">@color/lite_text_color_dark</item>
+    </style>
+    <style name="hint_text" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:textColorHint">@color/lite_text_color_dark</item>
+    </style>
+    <style name="input_background" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:background">@color/input_background_dark</item>
+    </style>
+    <style name="input_hint_and_text_and_bg" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorHint">@color/lite_text_color_dark</item>
+        <item name="android:background">@drawable/input_background_dark</item>
+    </style>
+    <style name="icon_tint" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:tint">@color/white</item>
+    </style>
+    <style name="floating_button_ade" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:backgroundTint">@color/input_background_dark</item>
+        <item name="android:tint">#FA0303</item>
+    </style>
+    <style name="add_img_btn" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:drawableTint">@color/white</item>
+        <item name="android:background">@drawable/input_background_dark</item>
+    </style>
+    <style name="secondary_bg" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:background">@drawable/input_background_dark</item>
+        <item name="android:textColor">@color/lite_text_color_dark</item>
+    </style>
+    <style name="menu_background" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:background">@drawable/menu_background_dark</item>
+        <item name="itemIconTint">@drawable/menu_item_selecter_dark</item>
+        <item name="itemRippleColor">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+    </style>
+
+    <style name="search_bg" parent="Base.Theme.HeathTrakerApp">
+        <item name="android:background">@drawable/input_background_dark</item>
+        <item name="queryHint">@color/lite_text_color_dark</item>
+        <item name="searchIcon">@drawable/search_white</item>
+        <item name="closeIcon">@drawable/close_white</item>
+    </style>
+
+</resources>

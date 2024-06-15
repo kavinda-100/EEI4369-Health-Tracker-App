@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/screenBackground"
+    android:layout_marginBottom="90dp"
+    tools:context=".NotificationFragment">
+
+<!--heading-->
+    <TextView
+        android:id="@+id/notification_heading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notification"
+        style="@style/primary_text"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        />
+<!--sub heading-->
+    <TextView
+        android:layout_below="@+id/notification_heading_text"
+        android:id="@+id/resent_notification_subHeading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resent_notification"
+        style="@style/secondary_text"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="20dp"
+        />
+<!--notification-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/resent_notification_list_recycler_view"
+        android:layout_below="@+id/resent_notification_subHeading_text"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

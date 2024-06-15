@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/screenBackground"
+    android:layout_marginBottom="90dp"
+    tools:context=".ListFragment">
+
+<!--    heading-->
+    <TextView
+        android:id="@+id/list_heading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/medication_list_heding"
+        style="@style/primary_text"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <!--    search area-->
+    <androidx.appcompat.widget.SearchView
+        android:layout_below="@+id/list_heading_text"
+        android:id="@+id/search_view_container_list"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:elevation="2dp"
+        app:queryHint="@string/search_for_medication"
+        app:iconifiedByDefault="false"
+        style="@style/search_bg"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medication_list_recycler_view"
+        android:layout_below="@+id/search_view_container_list"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+<!--    floating button-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/floating_button"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/primary"
+        app:srcCompat="@drawable/baseline_create_24"
+        app:tint="@color/black"
+        app:fabSize="auto"
+        app:fabCustomSize="70dp"
+        app:elevation="6dp"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        app:cardCornerRadius="15dp"
+        android:elevation="5dp"
+        android:layout_marginTop="10dp"
+        style="@style/input_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <!--notification-->
+        <RelativeLayout
+            android:layout_below="@+id/resent_notification_subHeading_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            style="@style/input_background">
+
+            <!-- medication name-->
+            <LinearLayout
+                android:id="@+id/medication_name_area_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medication Name: "
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    style="@style/primary_text"
+                    />
+                <TextView
+                    android:id="@+id/medication_name_text_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acetaertion"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    style="@style/secondary_text"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+            <!-- dosage-->
+            <LinearLayout
+                android:layout_below="@+id/medication_name_area_notification"
+                android:id="@+id/medication_dosage_area_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dosage: "
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    style="@style/primary_text"
+                    />
+                <TextView
+                    android:id="@+id/medication_dosage_text_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    style="@style/secondary_text"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+            <!-- time and date-->
+            <LinearLayout
+                android:id="@+id/medication_time_date_area_notification"
+                android:layout_below="@+id/medication_dosage_area_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <!-- time-->
+                <LinearLayout
+                    android:id="@+id/medication_time_area_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time: "
+                        android:textStyle="bold"
+                        android:textAlignment="textStart"
+                        android:textSize="16sp"
+                        style="@style/primary_text"
+                        />
+                    <TextView
+                        android:id="@+id/medication_time_text_notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11.00.a.m"
+                        android:textStyle="bold"
+                        android:textAlignment="textStart"
+                        android:textSize="16sp"
+                        style="@style/secondary_text"
+                        android:layout_marginStart="10dp"
+                        />
+                </LinearLayout>
+                <!-- date-->
+                <LinearLayout
+                    android:id="@+id/medication_date_area_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Frequency: "
+                        android:textStyle="bold"
+                        android:textAlignment="textStart"
+                        android:textSize="16sp"
+                        style="@style/primary_text"
+                        />
+
+                    <TextView
+                        android:id="@+id/medication_date_text_notification"
+                        style="@style/secondary_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="6"
+                        android:textAlignment="textStart"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
