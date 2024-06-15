@@ -95,4 +95,6 @@
     <string name="time_of_frequency">Time of frequency</string>
     <string name="every_6_hours">every 6 hours</string>
     <string name="toggle_mode">toggle mode</string>
+    <string name="articles">Articles</string>
+    <string name="videos">Videos</string>
 </resources>

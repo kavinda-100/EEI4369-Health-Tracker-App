@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ShowMessage {
 
-    // Show a message dialog with a title and message
+    // Show a message dialog with a title and message.
     public void show(String title, String message, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
