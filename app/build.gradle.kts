@@ -55,4 +55,6 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("com.sun.mail:android-mail:1.6.6")
     implementation("com.sun.mail:android-activation:1.6.7")
+    implementation("com.github.KwabenBerko:News-API-Java:1.0.2")
+    implementation("com.squareup.picasso:picasso:2.8")
 }

@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">HeathTrackerApp</string>
+    <!--    api keys-->
     <string name="my_api_key">AIzaSyApDBHYO8X4x6wHje9G8dEiZu37ZR1eQ5g</string>
     <string name="my_email_app_password">pvizwgsjrrqqtqrw</string>
     <string name="my_email">kavinda.local.dev@gmail.com</string>
-
+    <string name="news_api_key">f984981f0f844cc8a062400b2572e4fd</string>
 
     <!--    other values-->
     <string name="continue_text">Continue</string>
@@ -97,4 +98,5 @@
     <string name="toggle_mode">toggle mode</string>
     <string name="articles">Articles</string>
     <string name="videos">Videos</string>
+    <string name="news_now">News Now</string>
 </resources>
