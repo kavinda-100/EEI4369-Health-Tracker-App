@@ -1,5 +1,7 @@
 package com.s22010170.heathtrakerapp.adapters;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kwabenaberko.newsapilib.models.Article;
+import com.s22010170.heathtrakerapp.AddMedicationFragment;
+import com.s22010170.heathtrakerapp.FullNewsArticelFragment;
 import com.s22010170.heathtrakerapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -19,9 +24,11 @@ import java.util.List;
 
 public class EDUArticalRecyclerViewAdapter extends RecyclerView.Adapter<EDUArticalRecyclerViewAdapter.ViewHolder>{
     List<Article> articles;
+    Context context;
 
-    public EDUArticalRecyclerViewAdapter(List<Article> articles) {
+    public EDUArticalRecyclerViewAdapter(List<Article> articles, Context context) {
         this.articles = articles;
+        this.context = context;
     }
 
     @NonNull
@@ -42,6 +49,26 @@ public class EDUArticalRecyclerViewAdapter extends RecyclerView.Adapter<EDUArtic
                 .error(R.drawable.image_not_supported)
                 .placeholder(R.drawable.image_not_supported)
                 .into(holder.articleImage);
+
+        // set the on click listener
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FullNewsArticelFragment fullNewsArticelFragment = new FullNewsArticelFragment();
+                // set the bundle
+                Bundle bundle = new Bundle();
+                bundle.putString("url", article.getUrl());
+                fullNewsArticelFragment.setArguments(bundle);
+                // navigate to the full news article fragment
+                if (context instanceof FragmentActivity) {
+                    ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.home_container, fullNewsArticelFragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("fromNewsArticalFragment")
+                            .commit();
+                }
+            }
+        });
 
     }
 

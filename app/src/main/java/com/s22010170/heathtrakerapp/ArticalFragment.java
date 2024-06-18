@@ -65,7 +65,7 @@ public class ArticalFragment extends Fragment {
 
     private void setupRecyclerView(){
         articalRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        articleRecyclerViewAdapter = new EDUArticalRecyclerViewAdapter(articles);
+        articleRecyclerViewAdapter = new EDUArticalRecyclerViewAdapter(articles, requireContext());
         articalRecyclerView.setAdapter(articleRecyclerViewAdapter);
     }
 
@@ -103,7 +103,7 @@ public class ArticalFragment extends Fragment {
                         requireActivity().runOnUiThread(() -> {
                             changeProgressBarVisibility(false);
                             articles = response.getArticles();
-                            articleRecyclerViewAdapter = new EDUArticalRecyclerViewAdapter(articles);
+                            articleRecyclerViewAdapter = new EDUArticalRecyclerViewAdapter(articles, requireContext());
                             articalRecyclerView.setAdapter(articleRecyclerViewAdapter);
                         });
                     }
