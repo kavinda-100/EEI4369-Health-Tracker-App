@@ -15,6 +15,9 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -43,6 +46,8 @@ public class ReportFragment extends Fragment {
 
         // Update the line chart
         updateLineChart();
+        // Update the bar chart
+        updateBarChart();
 
         return view;
     }
@@ -123,4 +128,75 @@ public class ReportFragment extends Fragment {
     }
 
     // Method to update the bar chart
+    private void updateBarChart() {
+        // Set the colors for the labels and grid lines
+        int labelColor, gridColor;
+        // Check the current mode and set the colors accordingly
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        // Check if the device is in dark mode
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark mode
+            labelColor = getResources().getColor(R.color.white, null); // Use a white color for labels in dark mode
+            gridColor = getResources().getColor(R.color.gray, null); // Use a gray color for grid lines in dark mode
+        } else {
+            // Light mode
+            labelColor = getResources().getColor(R.color.black, null); // Use a black color for labels in light mode
+            gridColor = getResources().getColor(R.color.light_gray, null); // Use a light gray color for grid lines in light mode
+        }
+
+        // Set the description of the bar chart
+        Description description = new Description();
+        description.setText("Medication History");
+        description.setPosition(150f, 15f);
+        description.setTextColor(labelColor);
+        barChart.setDescription(description);
+
+        // Disable the right y-axis
+        barChart.getAxisRight().setEnabled(false);
+        // Set the x-axis values
+        List<String> xAxisValues = Arrays.asList("paracetamol", "ibuprofen", "aspirin", "vitamin c", "vitamin d", "vitamin e", "vitamin b");
+        // Get the x-axis of the bar chart
+        XAxis xAxis = barChart.getXAxis();
+        // Set the position of the x-axis
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        // Set the x-axis values
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
+        // Set the label count of the x-axis
+        xAxis.setLabelCount(xAxisValues.size());
+        // Set the granularity of the x-axis
+        xAxis.setGranularity(1f);
+        // Apply the colors to the x-axis
+        xAxis.setTextColor(labelColor);
+        xAxis.setGridColor(gridColor);
+
+        // Apply the colors to the left y-axis
+        YAxis leftYAxis = barChart.getAxisLeft();
+        leftYAxis.setTextColor(labelColor);
+        leftYAxis.setGridColor(gridColor);
+
+        // Create a new bar data set
+        BarDataSet barDataSet = new BarDataSet(barChartData(), "Medication History");
+        // Apply the colors to the bar data set
+        barDataSet.setValueTextColor(labelColor);
+        // Create a new bar data
+        BarData barData = new BarData();
+        barData.addDataSet(barDataSet);
+        // Set the bar data to the bar chart
+        barChart.setData(barData);
+        // Invalidate the bar chart
+        barChart.invalidate();
+    }
+
+    // Method to populate the bar chart
+    private ArrayList<BarEntry> barChartData(){
+        ArrayList<BarEntry> data = new ArrayList<>();
+        data.add(new BarEntry(1, 10));
+        data.add(new BarEntry(2, 20));
+        data.add(new BarEntry(3, 10));
+        data.add(new BarEntry(4, 40));
+        data.add(new BarEntry(5, 50));
+        data.add(new BarEntry(6, 20));
+        data.add(new BarEntry(7, 70));
+        return data;
+    }
 }
