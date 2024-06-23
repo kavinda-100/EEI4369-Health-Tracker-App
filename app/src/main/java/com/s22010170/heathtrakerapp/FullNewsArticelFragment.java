@@ -35,9 +35,6 @@ public class FullNewsArticelFragment extends Fragment {
         // create an instance of the ShowMessage class
         showMessage = new ShowMessage();
 
-        // show the progress bar
-        showProgressBar(true);
-
         // get the arguments
         Bundle bundle = getArguments();
         if(bundle == null){
@@ -53,21 +50,11 @@ public class FullNewsArticelFragment extends Fragment {
         // web settings
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(new MyWebViewClient());
+        webView.setWebViewClient(new MyWebViewClient(progressBar));
         // load the url
         webView.loadUrl(url);
-        // hide the progress bar
-        showProgressBar(false);
 
         return view;
-    }
-
-    private void showProgressBar(boolean show){
-        if(show){
-            progressBar.setVisibility(View.VISIBLE);
-        }else{
-            progressBar.setVisibility(View.GONE);
-        }
     }
 
 }
