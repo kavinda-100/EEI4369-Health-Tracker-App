@@ -86,10 +86,10 @@ public class UserFragment extends Fragment {
         String sharedPreferencesEmail = prefsManager.getString("email", "");
         showFingerPrint.setChecked(prefsManager.getBoolean("isFingerPrintAllowed", false));
         isNightMode = prefsManager.getBoolean("nightMode", true);
+        themeModeSwitch.setChecked(isNightMode);
 
         //TODO: set the theme mode
         if(isNightMode) {
-            themeModeSwitch.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         themeModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
