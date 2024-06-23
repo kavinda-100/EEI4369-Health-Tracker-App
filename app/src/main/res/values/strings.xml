@@ -99,4 +99,6 @@
     <string name="articles">Articles</string>
     <string name="videos">Videos</string>
     <string name="news_now">News Now</string>
+    <string name="trends_of_health_vitals">Trends Of Health Vitals</string>
+    <string name="medication_history">Medication History</string>
 </resources>

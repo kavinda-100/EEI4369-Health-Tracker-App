@@ -57,4 +57,5 @@ dependencies {
     implementation("com.sun.mail:android-activation:1.6.7")
     implementation("com.github.KwabenBerko:News-API-Java:1.0.2")
     implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

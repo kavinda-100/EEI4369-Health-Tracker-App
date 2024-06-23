@@ -20,5 +20,52 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         />
+    <ScrollView
+        android:id="@+id/chart_scroll_view"
+        android:layout_below="@+id/report_heading_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+<!--health trends in each day-->
+            <TextView
+                android:id="@+id/line_chart_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/trends_of_health_vitals"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+
+<!--how may pills have taken for each medication-->
+            <TextView
+                android:id="@+id/bar_chart_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/medication_history"
+                style="@style/primary_text"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/bar_chart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </RelativeLayout>
