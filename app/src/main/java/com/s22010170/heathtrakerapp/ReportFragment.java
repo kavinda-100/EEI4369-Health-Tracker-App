@@ -49,29 +49,7 @@ public class ReportFragment extends Fragment {
 
     // Method to update the line chart
     private void updateLineChart(){
-        //set the description of the line chart
-        Description description = new Description();
-        description.setText("Trend of Health Vitals");
-        description.setPosition(150f, 15f);
-        lineChart.setDescription(description);
-        // Disable the right y-axis
-        lineChart.getAxisRight().setEnabled(false);
-        // Set the x-axis values
-        List<String> xAxisValues = Arrays.asList("mon", "tue", "wed", "thu", "fri", "sat", "sun");
-        // Get the x-axis of the line chart
-        XAxis xAxis = lineChart.getXAxis();
-        // Set the position of the x-axis
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        // Set the x-axis values
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
-        // Set the label count of the x-axis
-        xAxis.setLabelCount(xAxisValues.size());
-        // Set the granularity of the x-axis
-        xAxis.setGranularity(1f);
-        // Create a new line data set
-        LineDataSet lineDataSet = new LineDataSet(lineChartData(), "Trend of Health Vitals");
-
-        // Set the color of the line
+        // Set the colors for the labels and grid lines
         int labelColor, gridColor;
         // Check the current mode and set the colors accordingly
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -86,6 +64,27 @@ public class ReportFragment extends Fragment {
             gridColor = getResources().getColor(R.color.light_gray, null); // Use a light gray color for grid lines in light mode
         }
 
+        //set the description of the line chart
+        Description description = new Description();
+        description.setText("Trend of Health Vitals");
+        description.setPosition(150f, 15f);
+        description.setTextColor(labelColor);
+        lineChart.setDescription(description);
+
+        // Disable the right y-axis
+        lineChart.getAxisRight().setEnabled(false);
+        // Set the x-axis values
+        List<String> xAxisValues = Arrays.asList("mon", "tue", "wed", "thu", "fri", "sat", "sun");
+        // Get the x-axis of the line chart
+        XAxis xAxis = lineChart.getXAxis();
+        // Set the position of the x-axis
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        // Set the x-axis values
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
+        // Set the label count of the x-axis
+        xAxis.setLabelCount(xAxisValues.size());
+        // Set the granularity of the x-axis
+        xAxis.setGranularity(1f);
         // Apply the colors to the x-axis
         xAxis.setTextColor(labelColor);
         xAxis.setGridColor(gridColor);
@@ -95,9 +94,10 @@ public class ReportFragment extends Fragment {
         leftYAxis.setTextColor(labelColor);
         leftYAxis.setGridColor(gridColor);
 
+        // Create a new line data set
+        LineDataSet lineDataSet = new LineDataSet(lineChartData(), "Trend of Health Vitals");
         // Apply the colors to the line data set
         lineDataSet.setValueTextColor(labelColor);
-
         // Create an array list of line data sets
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet);
