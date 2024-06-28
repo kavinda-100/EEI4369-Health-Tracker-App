@@ -101,6 +101,23 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         }else{
             greeting.setText("Hello, User");
         }
+
+        //TODO: get the all the health summary from the database
+        Cursor cursor = dataBaseHelper.getAllHealthSummary();
+        // check if the health data is already present in the database
+        if (cursor.getCount() == 0) {
+            // show manual health summary
+            hartRate.setText(0 + " bpm");
+            bloodPressure.setText(0 +"/" +0 + " mmHg");
+        }else{
+            while(cursor.moveToNext()){
+                // get the last health data from the database
+                if(cursor.isLast()){
+                    hartRate.setText(cursor.getString(1) + " bpm");
+                    bloodPressure.setText(cursor.getString(2) + " mmHg");
+                }
+            }
+        }
         
         
         //TODO: on click listener for the health summary card view
@@ -143,7 +160,14 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
     }
 
     private void addHealthDataToDatabase(String hartRate, String bloodPressure) {
-        showMessage.show("Success", "Data added successfully\n" + hartRate + "\n " + bloodPressure + ". ", requireContext());
+        // insert the health summary to the database
+        boolean isInserted = dataBaseHelper.insertHealthSummary(hartRate, bloodPressure);
+        if(isInserted){
+            Toast.makeText(requireContext(), "Health data added successfully", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            showMessage.show("Error", "Failed to add health data!. please try again.", requireContext());
+        }
     }
 
 

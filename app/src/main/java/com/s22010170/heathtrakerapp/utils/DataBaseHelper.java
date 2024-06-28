@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-
 public class DataBaseHelper extends SQLiteOpenHelper {
     // database name and version
     public static final String DATABASE_NAME = "HeathTracker.db";
@@ -18,6 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String USER_TABLE = "user_table";
     public static final String MEDICATION_TABLE = "medication_table";
     public static final String NOTIFICATION_TABLE = "notification_table";
+    public static final String HEALTH_SUMMARY_TABLE = "health_table";
     // column names
     //TODO: for user table
     public static final String user_COL_2 = "username";
@@ -41,6 +40,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String notification_COL_4 = "resentNotificationTime";
     public static final String notification_COL_5 = "resentNotificationRepeatTime";
 
+    //TODO: for health summary/vitals table
+    public static final String health_COL_2 = "hartRate";
+    public static final String health_COL_3 = "bloodPressure";
+
 
 
     public DataBaseHelper(@Nullable Context context) {
@@ -55,7 +58,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + MEDICATION_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, MEDICATIONNAME TEXT, DESCRIPTION TEXT, DOSAGE TEXT, MEDICATIONIMAGE BLOB, NOTIFICATIONTIME TEXT, NOTIFICATIONREPEATTIME TEXT)");
         // create notification table
         db.execSQL("CREATE TABLE " + NOTIFICATION_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, RESENTMEDICATIONNAME TEXT, RESENTDOSAGE TEXT, RESENTNOTIFICATIONTIME TEXT, RESENTNOTIFICATIONREPEATTIME TEXT)");
-
+        // create health summary table
+        db.execSQL("CREATE TABLE " + HEALTH_SUMMARY_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, HARTRATE TEXT, BLOODPRESSURE TEXT)");
     }
 
     @Override
@@ -64,6 +68,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + MEDICATION_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + NOTIFICATION_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + HEALTH_SUMMARY_TABLE);
         // create table
         onCreate(db);
 
@@ -253,6 +258,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean deleteAllNotifications() {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(NOTIFICATION_TABLE, null, null);
+
+        return result != -1;
+    }
+
+
+    //TODO: CRUD operations for Health Summary -----------------------------------------------------------------------------------
+
+    // insert health summary
+    public boolean insertHealthSummary(String hartRate, String bloodPressure) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(health_COL_2, hartRate);
+        contentValues.put(health_COL_3, bloodPressure);
+
+        long result = db.insert(HEALTH_SUMMARY_TABLE, null, contentValues);
+
+        return result != -1;
+    }
+
+    // get all health summary
+    public Cursor getAllHealthSummary() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + HEALTH_SUMMARY_TABLE, null);
+    }
+
+    // delete all health summary
+    public boolean deleteAllHealthSummary() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(HEALTH_SUMMARY_TABLE, null, null);
 
         return result != -1;
     }
