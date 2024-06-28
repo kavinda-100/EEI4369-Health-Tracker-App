@@ -101,4 +101,7 @@
     <string name="news_now">News Now</string>
     <string name="trends_of_health_vitals">Trends Of Health Vitals</string>
     <string name="medication_history">Medication History</string>
+    <string name="hart_rate">Hart Rate</string>
+    <string name="bloodpressure">bloodPressure</string>
+    <string name="enter_your_health_details">Enter Your Health Details</string>
 </resources>

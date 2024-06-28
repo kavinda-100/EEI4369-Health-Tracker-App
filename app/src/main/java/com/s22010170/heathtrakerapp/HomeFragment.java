@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.s22010170.heathtrakerapp.utils.DataBaseHelper;
 import com.s22010170.heathtrakerapp.utils.DbBitmapUtility;
@@ -31,7 +35,8 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
     ArrayList<MedicationListModel> medicationList = new ArrayList<MedicationListModel>();
     RecyclerView medicationHomeRecyclerView;
     ImageView userImage;
-    TextView greeting;
+    TextView greeting, hartRate, bloodPressure;
+    CardView healthSummaryCardView;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -53,6 +58,9 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         greeting = rootView.findViewById(R.id.greet_user_text);
         userImage = rootView.findViewById(R.id.user_avtar_img_home);
         medicationHomeRecyclerView = rootView.findViewById(R.id.medication_home_recycler_view);
+        healthSummaryCardView = rootView.findViewById(R.id.summary_card_view);
+        hartRate = rootView.findViewById(R.id.heart_rate_text);
+        bloodPressure = rootView.findViewById(R.id.blood_presser_text);
 
         // get the global variable
         String sharedPreferencesName = prefsManager.getString("name", null);
@@ -93,9 +101,49 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         }else{
             greeting.setText("Hello, User");
         }
+        
+        
+        //TODO: on click listener for the health summary card view
+        healthSummaryCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHealthInputDialogBox();
+            }
+        });
 
 
         return rootView;
+    }
+
+    private void openHealthInputDialogBox() {
+        // create a dialog box
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        // inflate the dialog box layout
+        View inputDialog = getLayoutInflater().inflate(R.layout.health_input_dialog_box, null);
+        // set the dialog box view
+        builder.setView(inputDialog);
+        // show the dialog box
+        builder.setCancelable(false);
+        // set the dialog box buttons for positive case
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            // get the input fields
+            EditText hartRateInput = inputDialog.findViewById(R.id.add_hartRate);
+            EditText bloodPressureInput = inputDialog.findViewById(R.id.add_bloodPressure);
+            // check if the input fields are empty
+            if(hartRateInput.getText().toString().isEmpty() || bloodPressureInput.getText().toString().isEmpty()) {
+                showMessage.show("Error", "Please fill all the fields", requireContext());
+            }else{
+                addHealthDataToDatabase(hartRateInput.getText().toString(), bloodPressureInput.getText().toString());
+            }
+        });
+        // set the dialog box buttons for negative case
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        // show the dialog box
+        builder.show();
+    }
+
+    private void addHealthDataToDatabase(String hartRate, String bloodPressure) {
+        showMessage.show("Success", "Data added successfully\n" + hartRate + "\n " + bloodPressure + ". ", requireContext());
     }
 
 
@@ -119,6 +167,7 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         }
     }
 
+    // on medication item click for the recycler view
     @Override
     public void onMedicationItemClick(int position) {
         AboutMedicationFragment aboutMedicationFragment = new AboutMedicationFragment();
