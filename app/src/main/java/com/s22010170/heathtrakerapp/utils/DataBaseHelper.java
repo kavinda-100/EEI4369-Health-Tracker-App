@@ -290,4 +290,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return result != -1;
     }
+
+    //TODO: operations for Reports(graphs) Health Summary and medication history -----------------------------------------------------------------------------------
+
+    // Fetch health summary data
+    public Cursor getHealthSummaryData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + HEALTH_SUMMARY_TABLE, null);
+    }
+
+    // Fetch medication history data
+    public Cursor getMedicationHistory() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + MEDICATION_TABLE, null);
+    }
+
 }

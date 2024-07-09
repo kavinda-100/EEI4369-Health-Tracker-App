@@ -1,6 +1,7 @@
 package com.s22010170.heathtrakerapp;
 
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,6 +24,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.s22010170.heathtrakerapp.utils.DataBaseHelper;
+import com.s22010170.heathtrakerapp.utils.MedicationXAxisFormatter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,8 +34,10 @@ import java.util.List;
 
 public class ReportFragment extends Fragment {
 
+    private DataBaseHelper myDb;
     LineChart lineChart;
     BarChart barChart;
+    List<String> medicationNames;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +48,10 @@ public class ReportFragment extends Fragment {
         // Get the line chart and bar chart from the layout
         lineChart = view.findViewById(R.id.line_chart);
         barChart = view.findViewById(R.id.bar_chart);
+        // Initialize the database helper
+        myDb = new DataBaseHelper(getContext());
+        // Initialize the medication names list
+        medicationNames = new ArrayList<>();
 
         // Update the line chart
         updateLineChart();
@@ -100,7 +109,7 @@ public class ReportFragment extends Fragment {
         leftYAxis.setGridColor(gridColor);
 
         // Create a new line data set
-        LineDataSet lineDataSet = new LineDataSet(lineChartData(), "Trend of Health Vitals");
+        LineDataSet lineDataSet = new LineDataSet(lineChartData(), "Hart Rate");
         // Apply the colors to the line data set
         lineDataSet.setValueTextColor(labelColor);
         // Create an array list of line data sets
@@ -116,14 +125,28 @@ public class ReportFragment extends Fragment {
 
     //data to populate the line chart
     private ArrayList<Entry> lineChartData(){
+        Cursor cursor = myDb.getHealthSummaryData();
         ArrayList<Entry> data = new ArrayList<>();
-        data.add(new Entry(1, 10));
-        data.add(new Entry(2, 20));
-        data.add(new Entry(3, 10));
-        data.add(new Entry(4, 40));
-        data.add(new Entry(5, 50));
-        data.add(new Entry(6, 20));
-        data.add(new Entry(7, 70));
+
+        int i = 0;
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String heartRate = cursor.getString(1); // heart rate
+                // Assuming blood pressure data is not needed for the line chart
+                data.add(new Entry(i, Float.parseFloat(heartRate)));
+                i++;
+            }
+            cursor.close();
+        }
+        else{
+            data.add(new Entry(1, 1));
+            data.add(new Entry(2, 2));
+            data.add(new Entry(3, 1));
+            data.add(new Entry(4, 4));
+            data.add(new Entry(5, 5));
+            data.add(new Entry(6, 2));
+            data.add(new Entry(7, 7));
+        }
         return data;
     }
 
@@ -154,15 +177,16 @@ public class ReportFragment extends Fragment {
         // Disable the right y-axis
         barChart.getAxisRight().setEnabled(false);
         // Set the x-axis values
-        List<String> xAxisValues = Arrays.asList("paracetamol", "ibuprofen", "aspirin", "vitamin c", "vitamin d", "vitamin e", "vitamin b");
+        //List<String> xAxisValues = Arrays.asList("paracetamol", "ibuprofen", "aspirin", "vitamin c", "vitamin d", "vitamin e", "vitamin b"); // for development purposes
         // Get the x-axis of the bar chart
         XAxis xAxis = barChart.getXAxis();
         // Set the position of the x-axis
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         // Set the x-axis values
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
-        // Set the label count of the x-axis
-        xAxis.setLabelCount(xAxisValues.size());
+        //xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisValues)); // for development purposes
+        xAxis.setValueFormatter(new MedicationXAxisFormatter(medicationNames));
+        //Set the label count of the x-axis
+        //xAxis.setLabelCount(xAxisValues.size()); // for development purposes
         // Set the granularity of the x-axis
         xAxis.setGranularity(1f);
         // Apply the colors to the x-axis
@@ -175,7 +199,7 @@ public class ReportFragment extends Fragment {
         leftYAxis.setGridColor(gridColor);
 
         // Create a new bar data set
-        BarDataSet barDataSet = new BarDataSet(barChartData(), "Medication History");
+        BarDataSet barDataSet = new BarDataSet(barChartData(), "Medications");
         // Apply the colors to the bar data set
         barDataSet.setValueTextColor(labelColor);
         // Create a new bar data
@@ -189,14 +213,35 @@ public class ReportFragment extends Fragment {
 
     // Method to populate the bar chart
     private ArrayList<BarEntry> barChartData(){
+        Cursor cursor = myDb.getMedicationHistory();
         ArrayList<BarEntry> data = new ArrayList<>();
-        data.add(new BarEntry(1, 10));
-        data.add(new BarEntry(2, 20));
-        data.add(new BarEntry(3, 10));
-        data.add(new BarEntry(4, 40));
-        data.add(new BarEntry(5, 50));
-        data.add(new BarEntry(6, 20));
-        data.add(new BarEntry(7, 70));
+
+        int i = 0;
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String medicationName = cursor.getString(1); // medication name
+                String dosage = cursor.getString(3); // dosage
+                data.add(new BarEntry(i, Float.parseFloat(dosage)));
+                medicationNames.add(medicationName);
+                i++;
+            }
+            cursor.close();
+        }else {
+            data.add(new BarEntry(1, 1));
+            medicationNames.add("paracetamol");
+            data.add(new BarEntry(2, 2));
+            medicationNames.add("ibuprofen");
+            data.add(new BarEntry(3, 1));
+            medicationNames.add("aspirin");
+            data.add(new BarEntry(4, 4));
+            medicationNames.add("vitamin c");
+            data.add(new BarEntry(5, 5));
+            medicationNames.add("vitamin d");
+            data.add(new BarEntry(6, 2));
+            medicationNames.add("vitamin e");
+            data.add(new BarEntry(7, 7));
+            medicationNames.add("vitamin b");
+        }
         return data;
     }
 }
