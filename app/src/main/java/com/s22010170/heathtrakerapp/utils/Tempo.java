@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.core.app.ActivityCompat;
 
@@ -67,4 +69,17 @@ public class Tempo {
 //        // permission not granted, request for permission
 //        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, PERMISSION_CODE);
 //    }
+
+    //TODO: for heath dialog box drop down menu
+//    // set the adapter for the auto complete text view
+//    daysAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_text, daysOfWeek);
+//    // set the adapter to the auto complete text view
+//            autoCompleteTextView.setAdapter(daysAdapter);
+//    // set the on item click listener for the auto complete text view
+//            autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        @Override
+//        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//            day = daysAdapter.getItem(i);
+//        }
+//    });
 }

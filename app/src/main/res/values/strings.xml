@@ -104,4 +104,6 @@
     <string name="hart_rate">Hart Rate</string>
     <string name="bloodpressure">bloodPressure</string>
     <string name="enter_your_health_details">Enter Your Health Details</string>
+    <string name="select_day">select day</string>
+    <string name="select_date">Select Date:</string>
 </resources>

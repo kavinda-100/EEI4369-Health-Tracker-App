@@ -13,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.s22010170.heathtrakerapp.utils.DataBaseHelper;
 import com.s22010170.heathtrakerapp.utils.DbBitmapUtility;
 import com.s22010170.heathtrakerapp.dataClass.MedicationListModel;
@@ -62,6 +66,7 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         hartRate = rootView.findViewById(R.id.heart_rate_text);
         bloodPressure = rootView.findViewById(R.id.blood_presser_text);
 
+
         // get the global variable
         String sharedPreferencesName = prefsManager.getString("name", null);
         String sharedPreferencesUserEmail = prefsManager.getString("email", null);
@@ -73,6 +78,7 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
                 medicationList, true, this);
         medicationHomeRecyclerView.setAdapter(medicationListRecyclerviewAdapter);
         medicationHomeRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
 
         //TODO: setting the user image
         if(sharedPreferencesUserEmail != null) {
@@ -103,7 +109,7 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         }
 
         //TODO: get the all the health summary from the database
-        Cursor cursor = dataBaseHelper.getAllHealthSummary();
+        Cursor cursor = dataBaseHelper.getHealthSummaryData();
         // check if the health data is already present in the database
         if (cursor.getCount() == 0) {
             // show manual health summary
@@ -133,6 +139,7 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
     }
 
     private void openHealthInputDialogBox() {
+
         // create a dialog box
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         // inflate the dialog box layout
@@ -146,11 +153,14 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
             // get the input fields
             EditText hartRateInput = inputDialog.findViewById(R.id.add_hartRate);
             EditText bloodPressureInput = inputDialog.findViewById(R.id.add_bloodPressure);
+            MaterialAutoCompleteTextView autoCompleteTextView = inputDialog.findViewById(R.id.add_health_date_text);
+            String selectedDay = autoCompleteTextView.getText().toString().toLowerCase();
             // check if the input fields are empty
-            if(hartRateInput.getText().toString().isEmpty() || bloodPressureInput.getText().toString().isEmpty()) {
+            if(hartRateInput.getText().toString().isEmpty() || bloodPressureInput.getText().toString().isEmpty() || selectedDay.isEmpty()) {
                 showMessage.show("Error", "Please fill all the fields", requireContext());
             }else{
-                addHealthDataToDatabase(hartRateInput.getText().toString(), bloodPressureInput.getText().toString());
+                addHealthDataToDatabase(hartRateInput.getText().toString(), bloodPressureInput.getText().toString(), selectedDay);
+//                Toast.makeText(requireContext(), "Day: " + selectedDay, Toast.LENGTH_SHORT).show();
             }
         });
         // set the dialog box buttons for negative case
@@ -159,9 +169,9 @@ public class HomeFragment extends Fragment implements MedicationListRecyclerView
         builder.show();
     }
 
-    private void addHealthDataToDatabase(String hartRate, String bloodPressure) {
+    private void addHealthDataToDatabase(String hartRate, String bloodPressure, String selectedDay) {
         // insert the health summary to the database
-        boolean isInserted = dataBaseHelper.insertHealthSummary(hartRate, bloodPressure);
+        boolean isInserted = dataBaseHelper.insertHealthSummary(hartRate, bloodPressure, selectedDay);
         if(isInserted){
             Toast.makeText(requireContext(), "Health data added successfully", Toast.LENGTH_SHORT).show();
         }

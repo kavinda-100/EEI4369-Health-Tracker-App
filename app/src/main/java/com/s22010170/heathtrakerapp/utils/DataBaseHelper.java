@@ -43,6 +43,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //TODO: for health summary/vitals table
     public static final String health_COL_2 = "hartRate";
     public static final String health_COL_3 = "bloodPressure";
+    public static final String health_COL_4 = "day";
 
 
 
@@ -59,7 +60,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // create notification table
         db.execSQL("CREATE TABLE " + NOTIFICATION_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, RESENTMEDICATIONNAME TEXT, RESENTDOSAGE TEXT, RESENTNOTIFICATIONTIME TEXT, RESENTNOTIFICATIONREPEATTIME TEXT)");
         // create health summary table
-        db.execSQL("CREATE TABLE " + HEALTH_SUMMARY_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, HARTRATE TEXT, BLOODPRESSURE TEXT)");
+        db.execSQL("CREATE TABLE " + HEALTH_SUMMARY_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, HARTRATE TEXT, BLOODPRESSURE TEXT, DAY TEXT)");
     }
 
     @Override
@@ -266,22 +267,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //TODO: CRUD operations for Health Summary -----------------------------------------------------------------------------------
 
     // insert health summary
-    public boolean insertHealthSummary(String hartRate, String bloodPressure) {
+    public boolean insertHealthSummary(String hartRate, String bloodPressure, String day) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(health_COL_2, hartRate);
         contentValues.put(health_COL_3, bloodPressure);
+        contentValues.put(health_COL_4, day);
 
-        long result = db.insert(HEALTH_SUMMARY_TABLE, null, contentValues);
+        // first get the heath data. then check if the day is already in the database. if it is, update the data, else insert the data
+        Cursor cursor = db.rawQuery("SELECT * FROM " + HEALTH_SUMMARY_TABLE + " WHERE DAY = '" + day + "'", null);
+        if(cursor.getCount() == 0) {
+            long result = db.insert(HEALTH_SUMMARY_TABLE, null, contentValues);
+            return result != -1;
+        } else {
+            long result = db.update(HEALTH_SUMMARY_TABLE, contentValues, "DAY = ?", new String[]{day});
+            return result != -1;
+        }
 
-        return result != -1;
     }
 
-    // get all health summary
-    public Cursor getAllHealthSummary() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM " + HEALTH_SUMMARY_TABLE, null);
-    }
 
     // delete all health summary
     public boolean deleteAllHealthSummary() {
