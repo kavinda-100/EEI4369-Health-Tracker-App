@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -50,6 +53,8 @@ public class AddMedicationFragment extends Fragment {
     DataBaseHelper medicationDataBaseHelper;
     ShowMessage showMessage;
     SharedPrefsManager prefsManager;
+    AlarmReserve alarmReserve;
+    PendingIntent pendingIntent;
 
     Button addMedicationButton, cancelMedicationButton, addMedicationImageButton;
     EditText medicationName, medicationDescription, medicationDosage, medicationRepeatTime;
@@ -87,6 +92,9 @@ public class AddMedicationFragment extends Fragment {
         addMedicationArea = rootView.findViewById(R.id.add_medication_frequency_area);
         imageOverviewText = rootView.findViewById(R.id.add_medication_picture_overview);
         medicationImagePreview = rootView.findViewById(R.id.add_medication_picture_preview);
+
+        // create notification channel
+        createNotificationChannel();
 
         //TODO: add switch listener
         medicationNotificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -197,7 +205,7 @@ public class AddMedicationFragment extends Fragment {
 
     private void cancelAlarm() {
         Intent intent = new Intent(requireActivity(), AlarmReserve.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
         if (alarmManager == null){
             alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
         }
@@ -206,11 +214,9 @@ public class AddMedicationFragment extends Fragment {
     }
 
     private void setAlarm() {
-        String nameOfMedication = medicationName.getText().toString();
-        AlarmReserve alarmReserve = new AlarmReserve("Time to take your medication", "Take your" + nameOfMedication);
         alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getActivity(), AlarmReserve.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
         // Set the alarm to repeat every 6 hours
         String time = medicationRepeatTime.getText().toString();
         long sixHoursInMillis = (long) Integer.parseInt(time) * 60 * 60 * 1000;
@@ -245,6 +251,20 @@ public class AddMedicationFragment extends Fragment {
         });
     }
 
+    // create notification channel
+    private void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "medicationReminderApp";
+            String desc = "Channel for medication Alarm Manager";
+            int imp = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("medicationReminder", name, imp);
+            channel.setDescription(desc);
+            NotificationManager notificationManager = requireActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    // insert medication to the database
     public void InsertMedication(String name, String description, String dosage, byte[] image, String time, String repeatTime){
         boolean isInserted = medicationDataBaseHelper.insertMedication(name, description, dosage, image, time, repeatTime);
         if (isInserted){
@@ -253,6 +273,7 @@ public class AddMedicationFragment extends Fragment {
             showMessage.show("Error", "Failed to add medication", getActivity());
         }
     }
+    // insert notification to the database
     private void InsertNotification(String medicationName, String dosage, String notificationTime, String notificationRepeatTime){
         boolean isInserted = medicationDataBaseHelper.insertNotification(medicationName, dosage, notificationTime, notificationRepeatTime);
         if (!isInserted){
@@ -260,6 +281,7 @@ public class AddMedicationFragment extends Fragment {
         }
     }
 
+    // go to list fragment
     private  void goTOListFragment(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

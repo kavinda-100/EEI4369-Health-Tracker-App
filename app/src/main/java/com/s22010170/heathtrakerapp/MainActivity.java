@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -32,6 +33,7 @@ import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 100;
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
     SharedPrefsManager prefsManager;
     private static final int PERMISSION_CODE = 1001;
     private String sharedPreferencesEmail;
@@ -137,31 +139,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // check runtime permission
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
-                        // permission not granted, request it
-                        String[] permissions = {android.Manifest.permission.READ_MEDIA_IMAGES, android.Manifest.permission.READ_MEDIA_VIDEO};
-                        // show popup for runtime permission
-                        requestPermissions(permissions, PERMISSION_CODE);
-                    }else{
-                        // permission already granted
-                        // check if the user is already signed in
-                        Intent intent;
-                        if (!sharedPreferencesEmail.isEmpty()) {
-                            intent = new Intent(MainActivity.this, HomeActivity.class);
-                        } else {
-                            intent = new Intent(MainActivity.this, SignInActivity.class);
-                        }
-                        startActivity(intent);
+                if (checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+                    // permission not granted, request it
+                    String[] permissions = {Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.POST_NOTIFICATIONS};
+                    // show popup for runtime permission
+                    requestPermissions(permissions, PERMISSION_CODE);
+                } else {
+                    // permission already granted
+                    // check if the user is already signed in
+                    Intent intent;
+                    if (!sharedPreferencesEmail.isEmpty()) {
+                        intent = new Intent(MainActivity.this, HomeActivity.class);
+                    } else {
+                        intent = new Intent(MainActivity.this, SignInActivity.class);
                     }
-                }else{
-                    // system os is less than marshmallow
-                    return;
+                    startActivity(intent);
                 }
             }
         });
 
     }
+
     // handle result of runtime permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

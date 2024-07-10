@@ -224,8 +224,6 @@ public class EditMedicationFragment extends Fragment {
     }
 
     private void setAlarm() {
-        String nameOfMedication = medicationName.getText().toString();
-        AlarmReserve alarmReserve = new AlarmReserve("Time to take your medication", "Take your" + nameOfMedication);
         alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getActivity(), AlarmReserve.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
