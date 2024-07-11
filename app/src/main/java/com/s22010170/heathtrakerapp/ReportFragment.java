@@ -132,7 +132,6 @@ public class ReportFragment extends Fragment {
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 String heartRate = cursor.getString(1); // heart rate
-                // Assuming blood pressure data is not needed for the line chart
                 data.add(new Entry(i, Float.parseFloat(heartRate)));
                 i++;
             }

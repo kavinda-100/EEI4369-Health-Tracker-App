@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".utils.AlarmReserve" />
+        <receiver android:name=".utils.AlarmReserve" android:enabled="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

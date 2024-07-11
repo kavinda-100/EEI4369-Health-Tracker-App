@@ -2,6 +2,8 @@ package com.s22010170.heathtrakerapp;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -46,6 +49,7 @@ public class EditMedicationFragment extends Fragment {
     private MaterialTimePicker timePicker;
     private Calendar calendar;
     AlarmManager alarmManager;
+    PendingIntent pendingIntent;
     DataBaseHelper medicationDataBaseHelper;
     ShowMessage showMessage;
     SharedPrefsManager prefsManager;
@@ -72,6 +76,9 @@ public class EditMedicationFragment extends Fragment {
         prefsManager = new SharedPrefsManager(requireActivity());
         // create show message object
         showMessage = new ShowMessage();
+
+        // Create a notification channel for the app
+        createNotificationChannel();
 
         medicationName = rootView.findViewById(R.id.edit_medication_name);
         medicationDescription = rootView.findViewById(R.id.edit_medication_description);
@@ -173,7 +180,7 @@ public class EditMedicationFragment extends Fragment {
             }
         });
 
-        //TODO: add medication button click listener
+        //TODO: edit medication button click listener
         editMedicationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,52 +220,95 @@ public class EditMedicationFragment extends Fragment {
 
         return rootView;
     }
+
     private void cancelAlarm() {
+        // Create an Intent that identifies the AlarmReserve BroadcastReceiver
         Intent intent = new Intent(requireActivity(), AlarmReserve.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        // Create a PendingIntent that will perform a broadcast, using a unique request code (0) and immutable flag
+        pendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        // Check if the alarmManager is null, if so, get the system's Alarm Service
         if (alarmManager == null){
             alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
         }
+        // Cancel any alarms with a matching Intent defined by the pendingIntent
         alarmManager.cancel(pendingIntent);
+        // Show a toast message to the user indicating the alarm has been canceled
         Toast.makeText(requireActivity(), "Alarm Canceled", Toast.LENGTH_SHORT).show();
     }
 
     private void setAlarm() {
+        // Obtain the AlarmManager system service to schedule alarms
         alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
+        // Create an Intent that identifies the target broadcast receiver (AlarmReserve.class)
         Intent intent = new Intent(getActivity(), AlarmReserve.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        // Set the alarm to repeat every 6 hours
+        // Create a PendingIntent that will perform a broadcast, marked as immutable for security best practices
+        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        // Parse the repeat time from the medicationRepeatTime EditText, convert it to milliseconds
         String time = medicationRepeatTime.getText().toString();
         long sixHoursInMillis = (long) Integer.parseInt(time) * 60 * 60 * 1000;
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sixHoursInMillis, pendingIntent);
+        // Schedule a repeating alarm that wakes up the device to fire the pendingIntent at the specified interval
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sixHoursInMillis, pendingIntent);
+        // Display a toast message to inform the user that the alarm has been set
         Toast.makeText(requireActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
     }
 
 
     private void setTime() {
+        // Initialize the MaterialTimePicker.Builder
         timePicker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setHour(12)
-                .setMinute(0)
-                .setTitleText("Select Alarm Time")
-                .build();
+                .setTimeFormat(TimeFormat.CLOCK_12H) // Set the time format to 12-hour clock
+                .setHour(12) // Set the initial hour to 12
+                .setMinute(0) // Set the initial minute to 0
+                .setTitleText("Select Alarm Time") // Set the title of the picker
+                .build(); // Build the MaterialTimePicker instance
+        // Display the time picker dialog
         timePicker.show(requireActivity().getSupportFragmentManager(), "medicationReminder");
+        // Set a listener for the positive button click event
         timePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Check if the selected hour is greater than 12 to format the time string as PM
                 if (timePicker.getHour() > 12){
+                    // Format and set the time string to medicationTime TextView as PM
                     String time = String.format("%02d",(timePicker.getHour()-12)) +":"+ String.format("%02d", timePicker.getMinute())+"PM";
                     medicationTime.setText(time);
-                } else  {
+                } else {
+                    // Format and set the time string to medicationTime TextView as AM
                     medicationTime.setText(timePicker.getHour()+":" + timePicker.getMinute()+ "AM");
                 }
+                // Initialize the calendar instance to the current time
                 calendar = Calendar.getInstance();
+                // Set the HOUR_OF_DAY of the calendar to the selected hour
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+                // Set the MINUTE of the calendar to the selected minute
                 calendar.set(Calendar.MINUTE, timePicker.getMinute());
+                // Set the SECOND of the calendar to 0
                 calendar.set(Calendar.SECOND, 0);
+                // Set the MILLISECOND of the calendar to 0
                 calendar.set(Calendar.MILLISECOND, 0);
             }
         });
+    }
+
+    // create notification channel
+    private void createNotificationChannel(){
+        // Check if the Android version is Oreo or higher since Notification Channels were introduced in API level 26 (Android O)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            // Define the name of the notification channel
+            CharSequence name = "medicationReminderApp";
+            // Define the description for the notification channel
+            String desc = "Channel for medication Alarm Manager";
+            // Define the importance level of notifications from this channel; here it's set to high
+            int imp = NotificationManager.IMPORTANCE_HIGH;
+            // Create a NotificationChannel object with a unique ID, name, and importance level
+            NotificationChannel channel = new NotificationChannel("medicationReminder", name, imp);
+            // Set the description of the notification channel
+            channel.setDescription(desc);
+            // Get the NotificationManager from the system services
+            NotificationManager notificationManager = requireActivity().getSystemService(NotificationManager.class);
+            // Register the notification channel with the system
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void getMedicationDataByID(int medicationID){
